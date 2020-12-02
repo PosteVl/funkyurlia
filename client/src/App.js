@@ -3,6 +3,8 @@ import UrlForm from "./components/UrlForm";
 import Footer from "./components/Footer";
 import urlService from "./services/urlService";
 import Alert from "./components/Alert";
+import EmptyField from "./components/EmptyField";
+import ShortUrlField from "./components/ShortUrlField";
 import uniqueRandom from "unique-random";
 
 const random = uniqueRandom(1, 10000);
@@ -13,6 +15,7 @@ const App = () => {
   const [urls, setUrls] = useState([]);
   const [creator, setCreator] = useState("phstX");
   const [alerts, setAlerts] = useState([]);
+  const [renderShortUrl, setRenderShortUrl] = useState(false);
 
   const createNewUrl = () => {
     const urlVar = {
@@ -38,9 +41,11 @@ const App = () => {
         queueAlert([
           {
             type: `success`,
-            message: `Added "${returnedUrl.original_url}"`,
+            message: `Added "${returnedUrl.original_url}" with value "${returnedUrl.short_url}"`,
           },
         ]);
+        // if the shortened url version was created, set the boolean to render accordingly
+        setRenderShortUrl(true);
       })
       .catch((error) => {
         handleCreateErrors(error);
@@ -101,6 +106,16 @@ const App = () => {
     );
   });
 
+  //display shortened url
+  const shortUrlDisplay = renderShortUrl ? (
+    <ShortUrlField
+      originalUrlValue={urls.slice(-1)[0].original_url}
+      shortUrlValue={urls.slice(-1)[0].short_url}
+    />
+  ) : (
+    <EmptyField />
+  );
+
   return (
     <div className="App">
       <h1>URL Shortener Microservice</h1>
@@ -112,6 +127,8 @@ const App = () => {
         handleSubmit={(event) => handleSubmit(event)}
         handleChange={(event) => handleChange(event)}
       />
+
+      {shortUrlDisplay}
 
       <Footer footerValue={creator} />
     </div>
