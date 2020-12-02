@@ -63,7 +63,7 @@ app.post("/api/shorturl/new", async (req, res) => {
         });
       }
     } catch (err) {
-      res.status(500).json({ error: "gay server" });
+      res.status(500).json({ error: "error on server" });
     }
   }
 });
@@ -79,7 +79,7 @@ app.get("/api/shorturl/:short_url?", async (req, res) => {
       return res.status(404).json("invalid destination");
     }
   } catch (err) {
-    res.status(500).json("gay server");
+    res.status(500).json("error on server");
   }
 });
 

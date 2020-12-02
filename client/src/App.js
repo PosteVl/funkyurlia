@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import UrlForm from "./components/UrlForm";
 import Footer from "./components/Footer";
 import urlService from "./services/urlService";
+import Alert from "./components/Alert";
+import uniqueRandom from "unique-random";
+
+const random = uniqueRandom(1, 10000);
 
 const App = () => {
   const [newUrlName, setNewUrlName] = useState("");
   const [newShortUrlName, setNewShortUrlName] = useState("");
   const [urls, setUrls] = useState([]);
   const [creator, setCreator] = useState("phstX");
+  const [alerts, setAlerts] = useState([]);
 
   const createNewUrl = () => {
     const urlVar = {
@@ -19,7 +24,6 @@ const App = () => {
   };
 
   const resetUrlForm = () => {
-    console.log("in reset form");
     setNewUrlName("");
   };
 
@@ -31,28 +35,77 @@ const App = () => {
       .createShortenedUrl(url)
       .then((returnedUrl) => {
         setUrls(urls.concat(returnedUrl));
-        // queueAlert([
-        //   {
-        //     type: `success`,
-        //     message: `Added "${returnedUrl.name}"`,
-        //   },
-        // ]);
+        queueAlert([
+          {
+            type: `success`,
+            message: `Added "${returnedUrl.original_url}"`,
+          },
+        ]);
       })
       .catch((error) => {
-        //TODO implement error dealing mechanism
-        console.log("in error");
-        console.log(error);
+        handleCreateErrors(error);
       })
       .finally(() => resetUrlForm());
+  };
+
+  // handle errors associated with adding a new url
+  const handleCreateErrors = (error) => {
+    // const statusCode = error.response.status;
+    console.log(error.message);
+    const errorMessages = error.message;
+
+    if (errorMessages.length > 0) {
+      queueAlert([
+        {
+          type: "error",
+          message: errorMessages,
+        },
+      ]);
+    } else {
+      throw error;
+    }
   };
 
   const handleChange = (event) => {
     setNewUrlName(event.target.value);
   };
 
+  /**
+   * Map an array of alerts to a format usable by Alert Component
+   *
+   * @param {Object[]} newAlerts - An array of alerts to be transformed
+   * @param {string} newAlerts[].type - "info" or "error" or "success"
+   * @param {string} newAlerts[].message - The alert message
+   */
+  const queueAlert = (newAlerts) => {
+    const timeoutFunc = (id) =>
+      setAlerts((alerts) => alerts.filter((a) => a.id !== id));
+
+    const alertsWithTimeout = newAlerts.map((a) => {
+      return { ...a, id: `${a.type}-${random()}`, timeoutFunc: timeoutFunc };
+    });
+
+    setAlerts([...alerts, ...alertsWithTimeout]);
+  };
+
+  // display all queued alerts
+  const alertList = alerts.map((alert) => {
+    return (
+      <Alert
+        timeoutFunc={alert.timeoutFunc}
+        key={alert.id}
+        id={alert.id}
+        type={alert.type}
+        message={alert.message}
+      ></Alert>
+    );
+  });
+
   return (
     <div className="App">
       <h1>URL Shortener Microservice</h1>
+
+      {alertList}
 
       <UrlForm
         valueName={newUrlName}
