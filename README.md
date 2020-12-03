@@ -4,7 +4,7 @@ My implementation of the following exercise
 
 extras:
 >TODOS
-> - customise the boilerplate UI, add bootstrap
+> - finish integrating React, add bootstrap
 > - instead of shortening the URL, turn it into a custom string
 > - add themes of customization (e.g: hack url)
 > - deploy on private domain 
