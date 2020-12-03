@@ -4,9 +4,9 @@ My implementation of the following exercise
 
 extras:
 >TODOS
-> - finish integrating React, add bootstrap
-> - instead of shortening the URL, turn it into a custom string
-> - add themes of customization (e.g: hack url)
+> - customize UI
+> - create a CFG to change url into custom strings
+> - add themes of customization (e.g: hack url, one liner joke url)
 > - deploy on private domain 
 
 
