@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import UrlForm from "./components/UrlForm";
 import Footer from "./components/Footer";
 import urlService from "./services/urlService";
@@ -18,19 +19,18 @@ const App = () => {
   const [renderShortUrl, setRenderShortUrl] = useState(false);
   const [redirectedUrl, setRedirectedUrl] = useState([]);
 
-  useEffect(() => {
-    console.log("in effect");
-    if (urls !== undefined && urls.length != 0) {
-      urlService
-        .getShortenedUrl(urls.slice(-1)[0].short_url)
-        .then((returnedUrl) => {
-          if (returnedUrl) {
-            console.log(returnedUrl);
-            setRedirectedUrl(returnedUrl);
-          }
-        });
-    }
-  }, [renderShortUrl, urls]);
+  // useEffect(() => {
+  //   if (urls !== undefined && urls.length != 0) {
+  //     urlService
+  //       .getShortenedUrl(urls.slice(-1)[0].short_url)
+  //       .then((returnedUrl) => {
+  //         if (returnedUrl) {
+  //           console.log(returnedUrl);
+  //           setRedirectedUrl(returnedUrl);
+  //         }
+  //       });
+  //   }
+  // }, [renderShortUrl, urls]);
 
   const createNewUrl = () => {
     const urlVar = {
@@ -121,12 +121,25 @@ const App = () => {
     );
   });
 
+  // if I just redirect from the backend get endpoint, i will get CORS error
+  // when react makes the calls, it gets the redirection as a response
+  // the frontend then tries an ajax request to website, which doesn't have CORS headers
+  // only my backend response has the CORS headers
+  // For proper redirection, I will return status 200 and the url, and manually redirect it
+  const handleClick = (event, urlToGet) => {
+    console.log("handles click with url " + urlToGet);
+    event.preventDefault();
+    return urlService.getShortenedUrl(urlToGet).then((url) => {
+      window.open(url);
+    });
+  };
+
   //display shortened url
   const shortUrlDisplay = renderShortUrl ? (
     <ShortUrlField
       originalUrlValue={urls.slice(-1)[0].original_url}
       shortUrlValue={urls.slice(-1)[0].short_url}
-      redirectedUrlValue={redirectedUrl}
+      clickHandler={handleClick}
     />
   ) : (
     <EmptyField />

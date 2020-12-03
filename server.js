@@ -81,7 +81,7 @@ app.get("/api/shorturl/:short_url?", async (req, res) => {
       short_url: req.params.short_url,
     });
     if (url) {
-      return res.send(url.original_url);
+      return res.status(200).send(url.original_url);
     } else {
       return res.status(404).json("invalid destination");
     }
@@ -89,6 +89,7 @@ app.get("/api/shorturl/:short_url?", async (req, res) => {
     res.status(500).json("error on server");
   }
 });
+
 
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
