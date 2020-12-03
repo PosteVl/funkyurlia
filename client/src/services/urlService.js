@@ -8,4 +8,10 @@ const createShortenedUrl = (urlToShorten) => {
   return request.then((response) => response.data);
 };
 
-export default { createShortenedUrl };
+const getShortenedUrl = (urlToGet) => {
+  const request = axios.get(`api/shorturl/${urlToGet}`);
+  console.log("gets hereee with request: " + `api/shorturl/${urlToGet}`);
+  return request.then((response) => response.data);
+};
+
+export default { createShortenedUrl, getShortenedUrl };

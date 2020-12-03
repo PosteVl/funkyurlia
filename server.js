@@ -19,8 +19,15 @@ app.use(express.json());
 
 app.use("/public", express.static(`${process.cwd()}/public`));
 
-app.get("/", function (req, res) {
-  res.sendFile(process.cwd() + "/views/index.html");
+// app.get("/", function (req, res) {
+//   res.sendFile(process.cwd() + "/views/index.html");
+// });
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
 });
 
 // Your first API endpoint
@@ -74,7 +81,7 @@ app.get("/api/shorturl/:short_url?", async (req, res) => {
       short_url: req.params.short_url,
     });
     if (url) {
-      return res.redirect(url.original_url);
+      return res.send(url.original_url);
     } else {
       return res.status(404).json("invalid destination");
     }

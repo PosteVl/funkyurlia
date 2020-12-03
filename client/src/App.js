@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import UrlForm from "./components/UrlForm";
 import Footer from "./components/Footer";
 import urlService from "./services/urlService";
@@ -16,6 +16,21 @@ const App = () => {
   const [creator, setCreator] = useState("phstX");
   const [alerts, setAlerts] = useState([]);
   const [renderShortUrl, setRenderShortUrl] = useState(false);
+  const [redirectedUrl, setRedirectedUrl] = useState([]);
+
+  useEffect(() => {
+    console.log("in effect");
+    if (urls !== undefined && urls.length != 0) {
+      urlService
+        .getShortenedUrl(urls.slice(-1)[0].short_url)
+        .then((returnedUrl) => {
+          if (returnedUrl) {
+            console.log(returnedUrl);
+            setRedirectedUrl(returnedUrl);
+          }
+        });
+    }
+  }, [renderShortUrl, urls]);
 
   const createNewUrl = () => {
     const urlVar = {
@@ -111,6 +126,7 @@ const App = () => {
     <ShortUrlField
       originalUrlValue={urls.slice(-1)[0].original_url}
       shortUrlValue={urls.slice(-1)[0].short_url}
+      redirectedUrlValue={redirectedUrl}
     />
   ) : (
     <EmptyField />
