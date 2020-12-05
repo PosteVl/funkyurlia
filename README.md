@@ -4,7 +4,7 @@ My implementation of the following exercise
 
 extras:
 >TODOS
-> - customize UI
+> - add some CSS animations to the project
 > - create a CFG to change url into custom strings
 > - add themes of customization (e.g: hack url, one liner joke url)
 > - deploy on private domain 
