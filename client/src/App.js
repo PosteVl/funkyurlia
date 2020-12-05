@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import UrlForm from "./components/UrlForm";
 import Footer from "./components/Footer";
 import urlService from "./services/urlService";
@@ -7,6 +6,10 @@ import Alert from "./components/Alert";
 import EmptyField from "./components/EmptyField";
 import ShortUrlField from "./components/ShortUrlField";
 import uniqueRandom from "unique-random";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// play a bit with animations to get the gist
+import Circle from "./components/Circle";
 
 const random = uniqueRandom(1, 10000);
 
@@ -17,20 +20,6 @@ const App = () => {
   const [creator, setCreator] = useState("phstX");
   const [alerts, setAlerts] = useState([]);
   const [renderShortUrl, setRenderShortUrl] = useState(false);
-  const [redirectedUrl, setRedirectedUrl] = useState([]);
-
-  // useEffect(() => {
-  //   if (urls !== undefined && urls.length != 0) {
-  //     urlService
-  //       .getShortenedUrl(urls.slice(-1)[0].short_url)
-  //       .then((returnedUrl) => {
-  //         if (returnedUrl) {
-  //           console.log(returnedUrl);
-  //           setRedirectedUrl(returnedUrl);
-  //         }
-  //       });
-  //   }
-  // }, [renderShortUrl, urls]);
 
   const createNewUrl = () => {
     const urlVar = {
@@ -147,8 +136,9 @@ const App = () => {
 
   return (
     <div className="App">
+    
       <h1>URL Shortener Microservice</h1>
-
+      
       {alertList}
 
       <UrlForm

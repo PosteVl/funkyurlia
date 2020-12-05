@@ -1,16 +1,20 @@
 import React from "react";
+import Button from "react-bootstrap/Button";
+import SearchIcon from '@material-ui/icons/Search';
 
 const UrlForm = (props) => {
   return (
-    <div>
-      <form onSubmit={props.handleSubmit}>
-        <label htmlFor="url_input">URL:</label>
+    <div id="urlFormDiv">
+      <form id="urlForm" onSubmit={props.handleSubmit}>
         <input
           id="url_input"
           onChange={props.handleChange}
           value={props.valueName}
+          placeholder="https://example.com"
         />
-        <button type="submit">Funkify</button>
+        <Button id="funk-button" variant="outline-dark" type="submit">
+          <SearchIcon />
+        </Button>
       </form>
     </div>
   );

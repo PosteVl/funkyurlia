@@ -13,7 +13,7 @@ const Alert = ({ timeoutFunc, id, type, message }) => {
   const removeAlert = () => timeoutFunc(id);
 
   useEffect(() => {
-    setTimeout(removeAlert, 3000);
+    setTimeout(removeAlert, 1000);
   });
 
   return (

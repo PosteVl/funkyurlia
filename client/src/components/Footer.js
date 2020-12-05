@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = ({footerValue}) => {
   return (
-    <div>
+    <div className="footer">
       <footer>
         <p>By {footerValue}</p>
       </footer>

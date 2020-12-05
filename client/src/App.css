@@ -1,0 +1,100 @@
+body {
+  background-color: #baa1b8;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  font-size: font-size;
+  font-family: font-face;
+  color: font-color;
+  overflow: hidden;
+}
+input {
+  display: inline-block;
+  width: 100%;
+  border-radius: 10px;
+}
+#funk-button {
+  margin-left:10px;
+  border-radius: 10px;
+}
+.footer {
+  position: fixed;
+  font-family:OCR A Std, monospace ;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 10s;
+  color: #402039;
+}
+h1 {
+  font-size: 50px;
+  font-family:OCR A Std, monospace ;
+  color: var(--contrast-color);
+  margin-bottom: 20px;
+  text-align: center;
+  margin-top: 8%;
+  transform: translateY(800px);
+  animation: slideUp 1.5s ease forwards 0.3s;
+}
+#urlForm {
+  display: flex;
+  font-family:OCR A Std, monospace ;
+  align-items: center;
+}
+.c-alert {
+  display: flex;
+  justify-content: center;
+  color: #c7d9d3;
+  font-family:OCR A Std, monospace ;
+
+}
+#urlFormDiv {
+  font-size: 20px;
+  display: block;
+  margin: 15px auto;
+  max-width: 500px;
+  width: 100%;
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 3s;
+}
+.shortUrl{
+  display: flex;
+  justify-content: center;
+  font-family:OCR A Std, monospace ;
+
+}
+a {
+  color: #fff;
+}
+
+a:hover {
+  color: #c7d9d3;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(800px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
