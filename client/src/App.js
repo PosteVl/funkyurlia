@@ -137,7 +137,7 @@ const App = () => {
   return (
     <div className="App">
     
-      <h1>URL Shortener Microservice</h1>
+      <h1>URL Funkyfier Microservice</h1>
       
       {alertList}
 

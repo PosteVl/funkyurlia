@@ -6,6 +6,7 @@ const app = express();
 const validUrl = require("valid-url");
 const Funkurl = require("./models/url");
 const { find } = require("./models/url");
+const tracery = require("tracery-grammar");
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
@@ -40,9 +41,20 @@ const generateRandomId = () => {
   return Math.floor(Math.random() * Math.floor(5 * 100));
 };
 
+const grammar = tracery.createGrammar({
+  'action':['rem0ve@', 'depl0y#', 'd0wnl04d', 'crYPT.file', 'enCRYPt.file', 'h4ck.dll'],
+  'subject': ['drive>C:', 'TROJAN', '.ransomw4re', '197.0.0.1','hashM4p', ''],
+  'payload': ['exec.exe', 'unzip3exec.exe', 'hack.library', 'windows7.ExPlOiT$xor'],
+  'connectors': ['4', '@', '!', ';', '', '->', '', '', '-'],
+  'origin':['#action##subject##connectors##payload#']
+})
+grammar.addModifiers(tracery.baseEngModifiers); 
+
+console.log();
+
 app.post("/api/shorturl/new", async (req, res) => {
   const url = req.body.url;
-  const urlShort = generateRandomId();
+  const urlShort = grammar.flatten('#origin#');
 
   // check url valid
   if (!validUrl.isWebUri(url)) {
@@ -89,7 +101,6 @@ app.get("/api/shorturl/:short_url?", async (req, res) => {
     res.status(500).json("error on server");
   }
 });
-
 
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);

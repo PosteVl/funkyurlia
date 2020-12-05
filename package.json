@@ -18,6 +18,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.11.0",
+    "tracery-grammar": "^2.7.4",
     "unique-random": "^2.1.0",
     "valid-url": "^1.0.9"
   },
