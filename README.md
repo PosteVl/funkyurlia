@@ -4,7 +4,6 @@ My implementation of the following exercise
 
 extras:
 >TODOS
-> - add some CSS animations to the project
 > - add themes of customization (e.g: hack url, one liner joke url)
 > - deploy on private domain 
 
